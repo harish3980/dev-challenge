@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Volunteers</title>
+</head>
+<body>
+    <h1>Front End Web Development Challenge (List of Volunteer's)</h1>
+    <ul id="volunteer"></ul>
+<script>
+        var myList = document.getElementById("volunteer");
+        console.log('About to fetch a random image')
+        const apicall = fetch('https://randomuser.me/api/?results=10')
+        .then(function(response) {
+        if (!response.ok) {
+            throw new Error("HTTP error, status = " + response.status);
+        }
+        return response.json();
+        })
+        .then(function(json) {
+            for(var i = 0; i < json.results.length; i++) {
+            let img = document.createElement('img'); 
+            img.src = json.results[i].picture.large;
+            var listItem = document.createElement('li');
+            listItem.innerHTML = 'Name:' + '<strong>' + json.results[i].name['title'] +' '+ json.results[i].name['first']+' ' + json.results[i].name['last']+' '+ '</strong>';
+            listItem.innerHTML +=' Email ID '+ '<strong>'+ json.results[i].email + '.'+ '</strong>';
+            listItem.innerHTML +=' Phone:'+ '<strong>' + json.results[i].phone + '</strong>';
+            myList.appendChild(listItem);
+            myList.appendChild(img);
+        }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });    
+</script>
+
+<style>
+    li {
+      border:1px solid rgb(78, 131, 133);
+      list-style: none;
+      color: whitesmoke;
+      background-color: rgb(78, 131, 133);
+    }
+    h1{ 
+        color: rgb(78, 131, 133);
+        text-align: center;
+    }
+</style>
+</body>
+</html>
